@@ -1,6 +1,7 @@
 import re
 from s2solver import run_degree_of_saturation
 import ollama
+from ollama import Client
 import streamlit as st
 from collections import defaultdict
 from validator import evaluate_response
