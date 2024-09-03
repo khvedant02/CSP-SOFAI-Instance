@@ -9,6 +9,8 @@ import matplotlib.pyplot as plt
 import random
 from example_generate import get_example_text
 
+
+ollama.pull("mistral")
 st.title("CSP-SOFAI Chatbot for Graph Coloring")
 
 # Initialize history
