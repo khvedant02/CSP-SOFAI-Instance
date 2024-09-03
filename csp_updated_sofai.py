@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import random
 from example_generate import get_example_text
 
-
+ollama = Client(host='my.ollama.host')
 ollama.pull("mistral")
 st.title("CSP-SOFAI Chatbot for Graph Coloring")
 
