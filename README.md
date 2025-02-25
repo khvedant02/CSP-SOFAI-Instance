@@ -117,3 +117,22 @@ This setup ensures that you can **install, run, and experiment** with SOFAI-v2 e
 
 ---
 
+## Citation
+
+If you use this work, please cite:
+```
+Khandelwal, Vedant, Vishal Pallagani, Biplav Srivastava, and Francesca Rossi. 
+"A Neurosymbolic Fast and Slow Architecture for Graph Coloring." 
+arXiv preprint arXiv:2412.01752 (2024).
+```
+
+```bibtex
+@article{khandelwal2024neurosymbolic,
+  title={A Neurosymbolic Fast and Slow Architecture for Graph Coloring},
+  author={Khandelwal, Vedant and Pallagani, Vishal and Srivastava, Biplav and Rossi, Francesca},
+  journal={arXiv preprint},
+  year={2024},
+  eprint={2412.01752},
+  archivePrefix={arXiv}
+}
+```
