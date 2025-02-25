@@ -33,6 +33,7 @@ CSP-SOFAI-Instance/
 │    ├── generate.py               # Generates problem instances using Erdős–Rényi model
 │
 │── solver/                        # Solvers used in the SOFAI framework
+│    ├── s1.py                     # LLM System 1 solver
 │    ├── s2.py                     # DSATUR-based System 2 solver
 │
 │── utils/                         # Utility functions for episodic memory, prompt generation, etc.
@@ -43,8 +44,7 @@ CSP-SOFAI-Instance/
 │    ├── util_functions.py         # Miscellaneous utility functions
 │
 │── validator/                     # Validator for checking solution correctness
-│    ├── validate.py               # Core validation logic for checking color assignment correctness
-│    ├── validator.py              # High-level validation functions
+│    ├── validate.py               # Core validation logic for checking color assignment correctness and provide feedback
 │
 │── requirements.txt               # Required dependencies for running the framework
 │── run_app.py                     # Main script to execute the graph coloring solver
