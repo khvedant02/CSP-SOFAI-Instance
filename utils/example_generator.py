@@ -32,12 +32,12 @@ def generate_example(graph_content):
     coloring = nx.coloring.greedy_color(subgraph, strategy='largest_first')
     
     # Format the subgraph in DIMACS format
-    dimacs_format = "c A simple example of solving graph coloring problem:\n"
+    dimacs_format = "A simple example of solving graph coloring problem:\n"
     dimacs_format += f"p edge {len(subgraph.nodes())} {len(subgraph.edges())}\n"
     for edge in subgraph.edges():
-        dimacs_format += f"e {edge[0]} {edge[1]}\n"
+        dimacs_format += f"e {edge[0]} {edge[1]}\n\n"
     
     # Format the coloring
-    coloring_format = " ".join([f"({node} {color})" for node, color in coloring.items()])
+    coloring_format = " ".join([f"({node} {color})\n" for node, color in coloring.items()])
     
     return dimacs_format + coloring_format

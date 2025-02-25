@@ -1,7 +1,6 @@
-p edge 5 6
-e a d
-e a e
+p edge 5 5
+e a b
+e a c
 e b c
-e b e
-e c e
+e c d
 e d e

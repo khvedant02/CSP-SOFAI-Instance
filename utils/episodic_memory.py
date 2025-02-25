@@ -35,18 +35,3 @@ class EpisodicMemory:
 
         return relevant_memories
     
-
-# Example usage:
-# if __name__ == "__main__":
-#     episodic_memory = EpisodicMemory()
-#     # Populate memory with example data
-#     episodic_memory.add_memory("Solve the equation x + 2 = 4", "x = 2")
-#     episodic_memory.add_memory("Calculate the perimeter of a rectangle with sides 2 and 3", "Perimeter = 10")
-    
-#     # New problem instance
-#     new_problem = "Find x when x + 3 = 5"
-#     similar_instances = episodic_memory.retrieve_similar(new_problem, top_k=1)
-    
-#     print("Most similar past problem and solution:")
-#     for problem, solution in similar_instances:
-        # print(f"Problem: {problem}, Suggested Solution: {solution}")
