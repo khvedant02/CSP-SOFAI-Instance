@@ -1,0 +1,7 @@
+networkx==3.2.1
+matplotlib==3.9.2
+streamlit==1.39.0
+ollama==0.1.17
+pyomo==6.8.0
+ortools==9.11.4210
+rank_bm25==0.2.2
