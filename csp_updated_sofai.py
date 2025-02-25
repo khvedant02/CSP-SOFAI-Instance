@@ -1,14 +1,15 @@
 import re
-from s2solver import run_degree_of_saturation
+from solver.s2 import run_degree_of_saturation
 import ollama
 from ollama import Client
 import streamlit as st
 from collections import defaultdict
-from validator import evaluate_response
+from validator.validator import evaluate_response
 import networkx as nx
 import matplotlib.pyplot as plt
 import random
-from example_generate import get_example_text
+from utils.example_generator import generate_example
+import os
 
 import subprocess
 process = subprocess.Popen(["ollama", "serve"])
@@ -25,10 +26,12 @@ if "model" not in st.session_state:
     st.session_state["model"] = ""
 
 # Fetch available models
-models = [model["name"] for model in ollama.list()["models"]]
+# print(ollama.list()['models'][0]['model'])
+# raise KeyboardInterrupt
+models = [model["model"] for model in ollama.list()["models"]]
 st.session_state["model"] = st.selectbox("Choose your model", models)
 
-
+# problem generator
 def generate_random_graph(num_nodes):
     """
     Generate a random undirected graph with the specified number of nodes, incorporating randomized complexities
@@ -99,6 +102,7 @@ def generate_random_graph(num_nodes):
 
 
 # Function to preprocess the user input for CSP
+# prompt
 def preprocess_input(graph_content, min_colors):
     
     user_input = f"""
@@ -152,6 +156,7 @@ def parse_graph(graph_content):
     return vertices, edges
 
 # Function to generate a response from the model
+#  can go under system 1 solver
 def model_res_generator():
     stream = ollama.chat(
         model=st.session_state["model"],
@@ -199,23 +204,23 @@ def visualize_coloring(vertices, edges, color_assignments, is_correct, feedback)
     st.pyplot(plt)
     plt.close()
 
-# Add buttons for feedback type and example type
-feedback_type = st.radio(
-    "Select Feedback Type",
-    ['Right/Wrong', 'Single Mistake', 'All Mistakes']
-)
+# # Add buttons for feedback type and example type
+# feedback_type = st.radio(
+#     "Select Feedback Type",
+#     ['Right/Wrong', 'Single Mistake', 'All Mistakes']
+# )
 
-example_type = st.radio(
-    "Select Example Type",
-    ['None', 'Pair', 'Triangle', 'Pair and Triangle', 'Clique']
-)
+# example_type = st.radio(
+#     "Select Example Type",
+#     ['None', 'Pair', 'Triangle', 'Pair and Triangle', 'Clique']
+# )
 
 # Create a layout with two columns for the file uploader and the start button
 col1, col2 = st.columns([3, 1])
 
 with col1:
     # File upload for the graph definition file
-    graph_file = st.file_uploader("Upload Graph File", type=["txt"])
+    graph_file = st.file_uploader("Upload Graph File [in DIMACS Format]", type=["txt"])
 
 with col2:
     # Add some padding to center the button vertically
@@ -279,7 +284,8 @@ while not coloring_correct and iteration < max_iterations:
 
     # Evaluate the response using the validator
     color_assignments = process_plan(response)
-    coloring_correct, feedback = evaluate_response(response, graph_content, color_assignments,feedback_type)
+    # validators work, to check and obtain feedback.
+    coloring_correct, feedback = evaluate_response(response, graph_content, color_assignments)
 
     # Visualize the coloring
     visualize_coloring(vertices, edges, color_assignments, coloring_correct, feedback)
@@ -287,11 +293,11 @@ while not coloring_correct and iteration < max_iterations:
     if coloring_correct:
         st.success("The above coloring is correct!")
     else:
-        if example_type != "none":
-            example_text = get_example_text(example_type, num_nodes)
-            full_feedback = f"The coloring is not correct. Feedback: {feedback}\n\n{example_text}"
-        else:
-            full_feedback = f"Feedback:\n\n{feedback}"
+        # if example_type != "none":
+            # example_text = get_example_text(example_type, num_nodes)
+            # full_feedback = f"The coloring is not correct. Feedback: {feedback}\n\n{example_text}"
+        # else:
+        full_feedback = f"Feedback:\n\n{feedback}"
         st.error(f"The above coloring is not correct. Providing feedback:\n\n{full_feedback}")
         st.error("Generating a new coloring ...")
         # Use feedback as the new user prompt

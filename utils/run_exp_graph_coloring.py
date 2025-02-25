@@ -13,8 +13,6 @@ from solver.s2_graphcoloring import run_degree_of_saturation
 from utils.prompt_generator import prompt_generator
 from utils.util_functions import parse_graph, process_plan, save_run_to_file
 
-def timeout_handler(signum, frame):
-    raise TimeoutError
 
 def model_res_generator(selected_model, messages):
     # Simulate interaction with an LLM
@@ -29,15 +27,8 @@ def model_res_generator(selected_model, messages):
     return response
 
 def run_s2_with_timeout(graph_content):
-    signal.signal(signal.SIGALRM, timeout_handler)
-    signal.alarm(200)  # Set the alarm for 200 seconds
-    try:
-        result = run_degree_of_saturation(graph_content)
-        signal.alarm(0)  # Cancel the alarm
-        return result, False
-    except TimeoutError:
-        print("System 2 solver exceeded 200 seconds timeout. Skipping...")
-        return None, True
+    result = run_degree_of_saturation(graph_content)
+    return result, False
 
 def main():
     parser = argparse.ArgumentParser(description="CSP Solver Benchmarking")
@@ -104,7 +95,11 @@ def main():
                 print(color_assignments)
                 validator = GraphColoringValidator(file_path)
                 coloring_correct, feedback = validator.validate_coloring(color_assignments)
-                print(feedback)
+                # print(feedback)
+                # check if errors is not empty
+                if feedback:
+                    feedback = "Adjacent vertices are colored same : " + ", ".join(feedback)
+                        
                 if coloring_correct:
                     s1_solved = True
                     episodic_memory.add_memory(graph_content, response)

@@ -30,21 +30,3 @@ class ImprovementTrendEvaluator:
             print("No improvement between the last two feedbacks.")
         else:
             print("Improvement detected or insufficient data for comparison.")
-
-# # Example usage:
-# if __name__ == "__main__":
-#     evaluator = ImprovementTrendEvaluator()
-    
-#     # Example feedbacks from the validator
-#     feedback1 = {'errors': [('A', 'B')]}  # First feedback from validator
-#     feedback2 = {'errors': [('A', 'B')]}  # Second feedback from validator, identical to first
-#     feedback3 = {'errors': [('C', 'D')]}  # Third feedback, different
-
-#     # Update evaluator with feedbacks
-#     evaluator.update_feedback(feedback1)
-#     evaluator.update_feedback(feedback2)
-#     evaluator.print_status()  # Expected to print no improvement message
-
-#     # Update with new, different feedback
-#     evaluator.update_feedback(feedback3)
-#     evaluator.print_status()  # Expected to indicate improvement

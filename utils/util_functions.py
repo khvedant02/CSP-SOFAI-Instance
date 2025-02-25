@@ -13,6 +13,7 @@ def parse_graph(file_path):
     edges = []
     num_vertices = 0
     num_edges = 0
+    vertices = list()
 
     # Open and read the file
     with open(file_path, 'r') as file:
@@ -26,10 +27,14 @@ def parse_graph(file_path):
             elif parts[0] == 'e' and len(parts) == 3:
                 _, v1, v2 = parts
                 edges.append(f"{v1} {v2}")
+                vertices.append(v1)
+                vertices.append(v2)
+    
+    vertices = list(set(vertices))
 
     # Preparing the string to be added to the prompt
     graph_description = f"p edge {num_vertices} {num_edges}\n" + "\n".join(f"e {edge}" for edge in edges)
-    return graph_description, num_edges, num_vertices
+    return graph_description, num_edges, num_vertices, edges, vertices
 
 def process_plan(response):
     """
